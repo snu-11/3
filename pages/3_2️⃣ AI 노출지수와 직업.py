@@ -97,17 +97,16 @@ st.markdown(f"## 🏆 총점: {st.session_state.score}점")
 
 st.divider()
 
-
 # Streamlit captions and subheaders for the questions
 st.caption(":blue_heart:비판적사고 기르기!")
 st.subheader("위 뉴스 내용과 AI 노출지수 값에 동의하나요?")
 first_student_thought = st.text_area("나의 의견을 적어주세요🖊️")
 
 st.subheader("고용 현황 및 AI 노출 지수 내용을 바탕으로 어떤 직업이 사라질 것 같나요?")
-second_student_thought = st.text_area("예) 나는 **돈**이 중요해!, 나는 **워라밸**이 중요해!")
+second_student_thought = st.text_area(""나의 의견을 적어주세요🖊️")
 
 # Check if the submission button is pressed
-if st.button("제출"):
+if st.button("제출", key="submit_thoughts"):
     # Create or load the existing DataFrame
     if 'student_thoughts.csv' not in os.listdir():
         student_thoughts_df = pd.DataFrame(columns=['생각1: 뉴스 내용과 AI 노출지수에 대한 의견', '생각2: 어떤 직업이 사라질 것 같은가'])
