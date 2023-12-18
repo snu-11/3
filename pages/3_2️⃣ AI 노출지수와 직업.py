@@ -103,10 +103,16 @@ st.divider()
 # Streamlit captions and subheaders for the questions
 st.caption(":blue_heart:비판적사고 기르기!")
 st.subheader("위 뉴스 내용과 AI 노출지수 값에 동의하나요?")
-first_student_thought = st.text_area("나의 의견을 적어주세요🖊️")
+
+# Unique key for the first text area
+first_student_thought_key = "first_student_thought"
+first_student_thought = st.text_area("나의 의견을 적어주세요🖊️", key=first_student_thought_key)
 
 st.subheader("고용 현황 및 AI 노출 지수 내용을 바탕으로 어떤 직업이 사라질 것 같나요?")
-second_student_thought = st.text_area("나의 의견을 적어주세요🖊️")
+
+# Unique key for the second text area
+second_student_thought_key = "second_student_thought"
+second_student_thought = st.text_area("나의 의견을 적어주세요🖊️", key=second_student_thought_key)
 
 # Check if the submission button is pressed
 if st.button("제출", key="final_submit"):
