@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 import os
 import koreanize_matplotlib 
+from docx import Document
+from io import BytesIO
 
 # 한글 폰트 설정
 plt.rcParams['font.family'] = 'NanumGothic'
@@ -17,6 +19,14 @@ st.set_page_config(
     initial_sidebar_state="auto"
 )
 
+def create_word_document(thoughts):
+    doc = Document()
+    doc.add_heading('Student Thoughts', 0)
+    for thought in thoughts:
+        doc.add_paragraph(thought)
+        doc.add_paragraph()  # Add a blank paragraph for spacing
+    return doc
+
 # Streamlit 앱의 제목 설정
 st.title("미래 직업 예측 보고서")
 
@@ -24,7 +34,7 @@ st.divider()
 
 # 오늘 배울 내용
 st.subheader("학습목표 :book:")
-st.write(":blue[[사회]] 변화하는 직업세계를 이해하고, 자신의 진로를 스스로 설계할 수 있다.")
+st.write(":blue[[사회]] 변화하는 직업세계를 이해하고, 자신의 진로를 스스로 설계해 갈 수 있다.")
 st.write(":blue[[정보]] 필요한 데이터를 찾고, 데이터를 파악하고, 데이터에 기반하여 의사결정을 할 수 있다.")
 st.write(":blue[[수학]] 공학적 도구를 이용하여 정보 데이터를 그래프로 나타내고, 그래프의 의미를 해석할 수 있다.")
 
@@ -93,16 +103,23 @@ st.subheader("시간에 따라 직업에 어떤 변화가 있었나요?")
 student_thought = st.text_area("그래프를 통해 발견한 내용을 적어주세요🖊️")
 
 if st.button("제출", key="submit_button"):
-    if 'student_thoughts.csv' not in os.listdir():
-        student_thoughts_df = pd.DataFrame({'학생 생각': [student_thought]})
-    else:
-        student_thoughts_df = pd.read_csv('student_thoughts.csv', encoding='utf-8')
-        student_thoughts_df = student_thoughts_df.append({'학생 생각': student_thought}, ignore_index=True)
+   # Create a Word document with the student thoughts
+    student_thoughts = student_thoughts_df['학생 생각'].tolist()
+    doc = create_word_document(student_thoughts)
 
-    student_thoughts_df.to_csv('student_thoughts.csv', index=False, encoding='utf-8')
+    # Save the document to a BytesIO object
+    buffer = BytesIO()
+    doc.save(buffer)
+    buffer.seek(0)
 
-    st.subheader("나의 생각")
-    st.write(student_thought)
+    # Create a download button for the document
+    st.download_button(
+        label="나의 생각 다운로드",
+        data=buffer,
+        file_name="student_thoughts.docx",
+        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    )
+
 
 st.divider()
 
