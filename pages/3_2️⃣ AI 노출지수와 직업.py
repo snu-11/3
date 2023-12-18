@@ -10,15 +10,15 @@ import pandas as pd
 def convert_to_word(dataframe):
     doc = Document()
     for index, row in dataframe.iterrows():
-        doc.add_heading('학생 생각', level=1)
+        doc.add_heading('생각1', level=1)
         # Convert to string before adding to the document
-        student_thought = str(row['학생 생각']) if pd.notna(row['학생 생각']) else ""
-        doc.add_paragraph(student_thought)
+        student_thought = str(row['생각1']) if pd.notna(row['생각1']) else ""
+        doc.add_paragraph(first_student_thought)
 
-        doc.add_heading('직업과의 연관성 생각', level=1)
+        doc.add_heading('생각2', level=1)
         # Convert to string before adding to the document
-        job_relation_thought = str(row['직업과의 연관성 생각']) if pd.notna(row['직업과의 연관성 생각']) else ""
-        doc.add_paragraph(job_relation_thought)
+        job_relation_thought = str(row['생각2']) if pd.notna(row['생각2']) else ""
+        doc.add_paragraph(second_student_thought)
 
         doc.add_page_break()
     return doc
