@@ -11,12 +11,12 @@ def convert_to_word(dataframe):
     doc = Document()
     for index, row in dataframe.iterrows():
         doc.add_heading('생각1', level=1)
-        student_thought = str(row['생각1']) if pd.notna(row['생각1']) else ""
-        doc.add_paragraph(student_thought)  # Use the correct variable here
+        student_thought = str(row['생각1: 뉴스 내용과 AI 노출지수에 대한 의견']) if pd.notna(row['생각1: 뉴스 내용과 AI 노출지수에 대한 의견']) else ""
+        doc.add_paragraph(student_thought)
 
         doc.add_heading('생각2', level=1)
-        job_relation_thought = str(row['생각2']) if pd.notna(row['생각2']) else ""
-        doc.add_paragraph(job_relation_thought)  # Use the correct variable here
+        job_relation_thought = str(row['생각2: 어떤 직업이 사라질 것 같은가']) if pd.notna(row['생각2: 어떤 직업이 사라질 것 같은가']) else ""
+        doc.add_paragraph(job_relation_thought)
 
         doc.add_page_break()
     return doc
@@ -120,11 +120,17 @@ if st.button("제출", key="final_submit"):
     else:
         student_thoughts_df = pd.read_csv('student_thoughts.csv', encoding='utf-8')
 
+    # Print or log the column names for debugging
+    print("Column names in the DataFrame:", student_thoughts_df.columns)
+
     # Append new data to the DataFrame
     new_data = pd.DataFrame({'생각1: 뉴스 내용과 AI 노출지수에 대한 의견': [first_student_thought],
                              '생각2: 어떤 직업이 사라질 것 같은가': [second_student_thought]})
     student_thoughts_df = pd.concat([student_thoughts_df, new_data], ignore_index=True)
     student_thoughts_df.to_csv('student_thoughts.csv', index=False, encoding='utf-8')
+
+    # Call the convert_to_word function
+    doc = convert_to_word(student_thoughts_df)
 
     # Display the submitted data
     st.subheader("나의 생각:")
