@@ -11,14 +11,12 @@ def convert_to_word(dataframe):
     doc = Document()
     for index, row in dataframe.iterrows():
         doc.add_heading('생각1', level=1)
-        # Convert to string before adding to the document
         student_thought = str(row['생각1']) if pd.notna(row['생각1']) else ""
-        doc.add_paragraph(first_student_thought)
+        doc.add_paragraph(student_thought)  # Use the correct variable here
 
         doc.add_heading('생각2', level=1)
-        # Convert to string before adding to the document
         job_relation_thought = str(row['생각2']) if pd.notna(row['생각2']) else ""
-        doc.add_paragraph(second_student_thought)
+        doc.add_paragraph(job_relation_thought)  # Use the correct variable here
 
         doc.add_page_break()
     return doc
