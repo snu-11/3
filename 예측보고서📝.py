@@ -108,9 +108,11 @@ if 'student_thoughts_df' not in st.session_state:
 
 # When the button is clicked
 if st.button("제출", key="submit_button"):
-    # Append the new thought to the DataFrame
-    new_thought = {'학생 생각': student_thought}
-    st.session_state.student_thoughts_df = st.session_state.student_thoughts_df.append(new_thought, ignore_index=True)
+    # Create a new DataFrame for the new thought
+    new_thought = pd.DataFrame({'학생 생각': [student_thought]})
+    
+    # Concatenate the new thought DataFrame with the existing DataFrame
+    st.session_state.student_thoughts_df = pd.concat([st.session_state.student_thoughts_df, new_thought], ignore_index=True)
     st.session_state.student_thoughts_df.to_csv('student_thoughts.csv', index=False, encoding='utf-8')
 
     # Display the submitted thought
@@ -133,6 +135,7 @@ if st.button("제출", key="submit_button"):
         file_name="student_thoughts.docx",
         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     )
+
 
 
 st.divider()
