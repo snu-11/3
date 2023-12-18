@@ -72,7 +72,10 @@ for i in range(0, len(job_data['직업']), 5):
             with cols[j]:
                 # HTML 스타일을 사용하여 글자 크기 조정
                 st.markdown(f"<span style='font-size: 15px;'>{emoji} {job}</span>", unsafe_allow_html=True)
-                guess = st.number_input("", min_value=0, max_value=100, step=1, key=job)
+                
+                # Unique key for each number input
+                guess_key = f"guess_{job}"
+                guess = st.number_input("", min_value=0, max_value=100, step=1, key=guess_key)
 
                 # 제출 버튼이 눌렸다면, 피드백 제공
                 if st.session_state.submitted:
@@ -106,7 +109,7 @@ st.subheader("고용 현황 및 AI 노출 지수 내용을 바탕으로 어떤 �
 second_student_thought = st.text_area("나의 의견을 적어주세요🖊️")
 
 # Check if the submission button is pressed
-if st.button("제출", key="submit_thoughts"):
+if st.button("제출", key="final_submit"):
     # Create or load the existing DataFrame
     if 'student_thoughts.csv' not in os.listdir():
         student_thoughts_df = pd.DataFrame(columns=['생각1: 뉴스 내용과 AI 노출지수에 대한 의견', '생각2: 어떤 직업이 사라질 것 같은가'])
