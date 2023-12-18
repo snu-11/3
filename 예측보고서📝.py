@@ -102,9 +102,23 @@ st.divider()
 st.subheader("시간에 따라 직업에 어떤 변화가 있었나요?")
 student_thought = st.text_area("그래프를 통해 발견한 내용을 적어주세요🖊️")
 
+# Initialize an empty DataFrame for student thoughts outside the button click condition
+if 'student_thoughts_df' not in st.session_state:
+    st.session_state.student_thoughts_df = pd.DataFrame({'학생 생각': []})
+
+# When the button is clicked
 if st.button("제출", key="submit_button"):
-   # Create a Word document with the student thoughts
-    student_thoughts = student_thoughts_df['학생 생각'].tolist()
+    # Append the new thought to the DataFrame
+    new_thought = {'학생 생각': student_thought}
+    st.session_state.student_thoughts_df = st.session_state.student_thoughts_df.append(new_thought, ignore_index=True)
+    st.session_state.student_thoughts_df.to_csv('student_thoughts.csv', index=False, encoding='utf-8')
+
+    # Display the submitted thought
+    st.subheader("나의 생각")
+    st.write(student_thought)
+
+    # Create a Word document with the student thoughts
+    student_thoughts = st.session_state.student_thoughts_df['학생 생각'].tolist()
     doc = create_word_document(student_thoughts)
 
     # Save the document to a BytesIO object
