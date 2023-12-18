@@ -96,8 +96,8 @@ if st.button("제출"):
     else:
         student_thoughts_df = pd.read_csv('student_thoughts.csv', encoding='utf-8')
 
-    new_data = {'학생 생각': first_student_thought, '직업과의 연관성 생각': second_student_thought}
-    student_thoughts_df = student_thoughts_df.append(new_data, ignore_index=True)
+    new_data = pd.DataFrame([{'학생 생각': first_student_thought, '직업과의 연관성 생각': second_student_thought}])
+    student_thoughts_df = pd.concat([student_thoughts_df, new_data], ignore_index=True)
     student_thoughts_df.to_csv('student_thoughts.csv', index=False, encoding='utf-8')
 
     # 제출한 데이터를 화면에 표시
