@@ -103,7 +103,7 @@ st.subheader("위 뉴스 내용과 AI 노출지수 값에 동의하나요?")
 first_student_thought = st.text_area("나의 의견을 적어주세요🖊️")
 
 st.subheader("고용 현황 및 AI 노출 지수 내용을 바탕으로 어떤 직업이 사라질 것 같나요?")
-second_student_thought = st.text_area(""나의 의견을 적어주세요🖊️")
+second_student_thought = st.text_area("나의 의견을 적어주세요🖊️")
 
 # Check if the submission button is pressed
 if st.button("제출", key="submit_thoughts"):
