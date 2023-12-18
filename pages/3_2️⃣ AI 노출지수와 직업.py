@@ -1,7 +1,6 @@
 import streamlit as st
 import koreanize_matplotlib 
 import os
-import koreanize_matplotlib 
 from docx import Document
 from io import BytesIO
 import pandas as pd
