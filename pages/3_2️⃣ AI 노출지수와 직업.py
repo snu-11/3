@@ -104,7 +104,8 @@ if st.button("제출", key="submit_button"):
         student_thoughts_df = pd.DataFrame({'학생 생각': [student_thought]})
     else:
         student_thoughts_df = pd.read_csv('student_thoughts.csv', encoding='utf-8')
-        student_thoughts_df = student_thoughts_df.append({'학생 생각': student_thought}, ignore_index=True)
+        student_thoughts_df = pd.concat([student_thoughts_df, pd.DataFrame({'학생 생각': [student_thought]})], ignore_index=True)
+
 
     student_thoughts_df.to_csv('student_thoughts.csv', index=False, encoding='utf-8')
 
